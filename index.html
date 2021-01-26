@@ -19,6 +19,40 @@
 </head>
 <body>
     <div id='box'></div>
-    <script src="subscribe1.js"></script>
+    <script src="subscribe2.js"></script>
+    <script>
+        var subscribe = Sub()
+        box.onclick = function (e) {
+            subscribe.fire('@aa',10,20,e)
+        }
+        function fn1(x,y,e) {
+            console.log(1)
+        }
+        subscribe.on('@aa',fn1)
+        function fn2(){
+            console.log(2)
+            //这里 我们在触发fn2的时候 把fn1 和 fn2 删除
+            //这里 我们第一次触发的的时候 fn1 和 fn2 应该还能触发
+            // 但是 fn2 执行完毕之后 fn1 和 fn2 才会被删除
+            // 但是 我们第一次触发的时候  fn1 和 fn2 fn5 还在 但是 fn3 和 fn4 却被删除了
+            // 然后当我们点击第二次的时候 才恢复正常
+            // subscribe.off('@aa',fn1)
+            subscribe.off('@aa',fn2)
+        }
+        subscribe.on('@aa',fn2)
+        function fn3(){
+            console.log(3)
+        }
+        subscribe.on('@aa',fn3)
+        function fn4(){
+            console.log(4)
+        }
+        subscribe.on('@aa',fn4)
+
+        function fn5(){
+            console.log(5)
+        }
+        subscribe.on('@aa',fn5)
+    </script>
 </body>
 </html>
